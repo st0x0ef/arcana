@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-@OnlyIn(Dist.CLIENT)
+
 public class PopupWidget extends AbstractWidget {
 
     private ResourceLocation texture;

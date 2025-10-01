@@ -15,7 +15,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.exodusstudio.arcana.client.Keybindings;
 import org.exodusstudio.arcana.client.gui.ResearchTableScreen;
-import org.exodusstudio.arcana.common.block.entity.renderer.BoilerBlockEntityRenderer;
 import org.exodusstudio.arcana.common.data.theorie.TheoryRegistry;
 import org.exodusstudio.arcana.common.item.ArcanaCreativeModeTabs;
 import org.exodusstudio.arcana.common.particle.BoilingParticle;
@@ -67,7 +66,7 @@ public class Arcana {
 
         @SubscribeEvent
         public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
-            event.registerBlockEntityRenderer(BlockEntityRegistry.BOILER_BE.get(), BoilerBlockEntityRenderer::new);
+            //event.registerBlockEntityRenderer(BlockEntityRegistry.BOILER_BE.get(), BoilerBlockEntityRenderer::new);
         }
     }
 }

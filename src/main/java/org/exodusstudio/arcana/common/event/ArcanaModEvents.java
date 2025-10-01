@@ -113,7 +113,7 @@ public class ArcanaModEvents {
 
 
 
-    @OnlyIn(Dist.CLIENT)
+    
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();

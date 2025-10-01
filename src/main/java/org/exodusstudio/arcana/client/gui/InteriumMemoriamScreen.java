@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@OnlyIn(Dist.CLIENT)
+
 public class InteriumMemoriamScreen extends Screen  {
 
     private void renderTextureOverlay(GuiGraphics guiGraphics) {

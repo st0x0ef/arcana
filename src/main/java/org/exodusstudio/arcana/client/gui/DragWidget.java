@@ -10,15 +10,13 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ARGB;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.exodusstudio.arcana.Arcana;
 import org.exodusstudio.arcana.common.component.WidgetData;
 
 import java.util.List;
 import java.util.UUID;
 
-@OnlyIn(Dist.CLIENT)
+
 public class DragWidget extends AbstractWidget {
     private int offsetX, offsetY;
     private boolean dragging;
