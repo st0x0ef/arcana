@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "arcana_creative_tab",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "ingredient": "minecraft:glass_bottle",
+  "result": {
+    "id": "arcana:ink_bottle"
+  }
+}

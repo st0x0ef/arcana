@@ -1,0 +1,17 @@
+{
+  "animation": {
+    "frametime": 3,
+    "interpolation": true,
+    "width": 16,
+    "height": 16,
+    "frames": [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+      {"index": 13, "time": 40},
+      {"index": 14, "time": 20},
+      {"index": 15, "time": 40},
+      {"index": 13, "time": 20},
+      {"index": 14, "time": 40},
+      {"index": 15, "time": 20}
+    ]
+  }
+}

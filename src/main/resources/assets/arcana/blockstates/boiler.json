@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "water_level=0": { "model": "arcana:block/boiler" },
+    "water_level=1": { "model": "arcana:block/boiler1_model" },
+    "water_level=2": { "model": "arcana:block/boiler2_model" },
+    "water_level=3": { "model": "arcana:block/boiler3_model" }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "rt_activated=off,facing=north": {"model": "arcana:block/research_table_default","y": 180},
+    "rt_activated=off,facing=south": {"model": "arcana:block/research_table_default", "y": 0},
+    "rt_activated=off,facing=west": {"model": "arcana:block/research_table_default", "y": 90},
+    "rt_activated=off,facing=east": {"model": "arcana:block/research_table_default", "y": 270},
+
+    "rt_activated=on_left,facing=north": {"model": "arcana:block/research_table_active_left","y": 180},
+    "rt_activated=on_left,facing=south": {"model": "arcana:block/research_table_active_left", "y": 0},
+    "rt_activated=on_left,facing=west": {"model": "arcana:block/research_table_active_left", "y": 90},
+    "rt_activated=on_left,facing=east": {"model": "arcana:block/research_table_active_left", "y": 270},
+
+    "rt_activated=on_right,facing=north": {"model": "arcana:block/research_table_active_right","y": 180},
+    "rt_activated=on_right,facing=south": {"model": "arcana:block/research_table_active_right", "y": 0},
+    "rt_activated=on_right,facing=west": {"model": "arcana:block/research_table_active_right", "y": 90},
+    "rt_activated=on_right,facing=east": {"model": "arcana:block/research_table_active_right", "y": 270}
+  }
+}

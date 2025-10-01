@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "arcana:block/nitor",
+    "layer1": "arcana:block/nitor_core"
+  }
+}

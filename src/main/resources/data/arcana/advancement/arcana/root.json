@@ -1,0 +1,23 @@
+{
+  "criteria": {
+    "joined": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "arcana:textures/gui/advancements/greatwood_plank.png",
+    "description": {
+      "translate": "advancements.arcana.root.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "arcana:nhil_crystal"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.arcana.root.title"
+    }
+  },
+  "sends_telemetry_event": true
+}

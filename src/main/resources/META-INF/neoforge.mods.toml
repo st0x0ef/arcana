@@ -1,0 +1,32 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+issueTrackerURL="https://github.com/ZestyBlaze/Arcana-Continuation/issues"
+
+[[mods]]
+modId = "arcana"
+version = "${mod_version}"
+displayName = "${mod_name}"
+updateJSONURL = "https://raw.githubusercontent.com/ZestyBlaze/Arcana-Continuation/refs/heads/1.21.x/update.json"
+displayURL = "https://github.com/ZestyBlaze/Arcana-Continuation"
+#logoFile = "examplemod.png"
+#credits = ""
+authors = "${mod_authors}"
+description = '''${mod_description}'''
+
+[[mixins]]
+config = "arcana.mixins.json"
+
+[[dependencies.arcana]]
+    modId = "neoforge"
+    type = "required"
+    versionRange = "${neo_version_range}"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[dependencies.arcana]]
+    modId = "minecraft"
+    type = "required"
+    versionRange = "${minecraft_version_range}"
+    ordering = "NONE"
+    side = "BOTH"

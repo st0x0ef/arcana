@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": "arcana:ancient_feather",
+    "B": "arcana:ink_bottle",
+    "C": "minecraft:ink_sac"
+  },
+  "pattern": [
+    " A ",
+    " C ",
+    " B "
+  ],
+  "result": {
+    "count": 1,
+    "id": "arcana:scribbling_tool"
+  },
+  "condition": "minecraft:entity_properties",
+  "entity": "this",
+  "predicate": {
+    "player": {
+      "advancements": {
+        "arcana:arcana/root": true
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "homepage": "https://github.com/ZestyBlaze/Arcana-Continuation",
+  "promos": {
+    "1.21.1-latest": "0.0.1",
+    "1.21.1-recommended": "0.0.1"
+  },
+  "1.21.1": {
+    "0.0.1": "Initial Push of Base"
+  }
+}

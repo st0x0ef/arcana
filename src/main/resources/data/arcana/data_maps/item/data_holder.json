@@ -1,0 +1,355 @@
+{
+  "values": {
+    "minecraft:amethyst_shard": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:crystalline"
+      ]
+    },
+    "minecraft:blaze_powder": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:pulverized"
+      ]
+    },
+    "minecraft:blaze_rod": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:amorphous"
+      ]
+    },
+    "minecraft:bone": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:amorphous"
+      ]
+    },
+    "minecraft:bone_block": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:amorphous"
+      ]
+    },
+    "minecraft:bone_meal": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:pulverized"
+      ]
+    },
+    "minecraft:breeze_rod": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:amorphous"
+      ]
+    },
+    "minecraft:clay_ball": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:crystalline"
+      ]
+    },
+    "minecraft:coal": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:amorphous"
+      ]
+    },
+    "minecraft:cobblestone": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:amorphous"
+      ]
+    },
+    "minecraft:copper_ingot": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:crystalline"
+      ]
+    },
+    "minecraft:diamond": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:crystalline"
+      ]
+    },
+    "minecraft:dirt": {
+      "states": [
+        "arcana:solid"
+      ]
+    },
+    "minecraft:emerald": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:crystalline"
+      ]
+    },
+    "minecraft:end_stone": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:amorphous"
+      ]
+    },
+    "minecraft:flint": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:amorphous"
+      ]
+    },
+    "minecraft:glass": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:amorphous"
+      ]
+    },
+    "minecraft:glowstone": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:amorphous"
+      ]
+    },
+    "minecraft:glowstone_dust": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:pulverized"
+      ]
+    },
+    "minecraft:gold_ingot": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:crystalline"
+      ]
+    },
+    "minecraft:grass_block": {
+      "states": [
+        "arcana:solid"
+      ]
+    },
+    "minecraft:gravel": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:pulverized_rough"
+      ]
+    },
+    "minecraft:gunpowder": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:pulverized"
+      ]
+    },
+    "minecraft:ice": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:crystalline"
+      ]
+    },
+    "minecraft:iron_ingot": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:crystalline"
+      ]
+    },
+    "minecraft:lapis_lazuli": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:amorphous"
+      ]
+    },
+    "minecraft:lava_bucket": {
+      "states": [
+        "arcana:liquid"
+      ]
+    },
+    "minecraft:magma_block": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:amorphous"
+      ]
+    },
+    "minecraft:magma_cream": {
+      "states": [
+        "arcana:liquid"
+      ],
+      "structures": [
+        "arcana:highly_viscous"
+      ]
+    },
+    "minecraft:milk_bucket": {
+      "states": [
+        "arcana:liquid"
+      ]
+    },
+    "minecraft:netherite_ingot": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:crystalline"
+      ]
+    },
+    "minecraft:netherrack": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:amorphous"
+      ]
+    },
+    "minecraft:obsidian": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:crystalline"
+      ]
+    },
+    "minecraft:prismarine_shard": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:crystalline"
+      ]
+    },
+    "minecraft:quartz": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:crystalline"
+      ]
+    },
+    "minecraft:redstone": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:pulverized"
+      ]
+    },
+    "minecraft:redstone_block": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:amorphous"
+      ]
+    },
+    "minecraft:sand": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:pulverized",
+        "arcana:crystalline"
+      ]
+    },
+    "minecraft:slime_ball": {
+      "states": [
+        "arcana:liquid"
+      ],
+      "structures": [
+        "arcana:super_saturated",
+        "arcana:highly_viscous"
+      ]
+    },
+    "minecraft:snow": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:pulverized",
+        "arcana:crystalline"
+      ]
+    },
+    "minecraft:soul_sand": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:non_newtonian"
+      ]
+    },
+    "minecraft:stone": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:amorphous"
+      ]
+    },
+    "minecraft:sugar": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:pulverized"
+      ]
+    },
+    "arcana:nhil_crystal": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:crystalline"
+      ]
+    },
+    "arcana:nhil_powder": {
+      "states": [
+        "arcana:solid"
+      ],
+      "structures": [
+        "arcana:pulverized"
+      ]
+    }
+  }
+}

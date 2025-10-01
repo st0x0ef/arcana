@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "arcana:item/nitor",
+    "tints": [
+      {
+        "type": "minecraft:dye",
+        "default": 16383998
+      }
+    ]
+  }
+}

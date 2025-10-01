@@ -1,0 +1,44 @@
+{
+  "criteria": {
+    "village_note": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structures": "#minecraft:village"
+              }
+            }
+
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "rewards": {
+    "recipes":[ "arcana:ink_bottle"
+    ]
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.arcana.ink.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "arcana:ink_bottle"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.arcana.ink.title"
+    }
+  },
+  "requirements": [
+    [
+      "village_note"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
