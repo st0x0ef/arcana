@@ -1,7 +1,9 @@
 package org.exodusstudio.arcana.common.block;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -22,7 +24,13 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.capabilities.BlockCapability;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import org.exodusstudio.arcana.common.block.entity.BoilerBlockEntity;
+import org.exodusstudio.arcana.common.capabilities.ModCapabilities;
+import org.exodusstudio.arcana.common.inventory.BoilerInventory;
 import org.exodusstudio.arcana.common.registry.BlockEntityRegistry;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,6 +48,11 @@ public class BoilerBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(BOILING);
         builder.add(WATER_LEVEL);
@@ -53,12 +66,12 @@ public class BoilerBlock extends BaseEntityBlock {
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
-
+/*
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
-
+*/
     /* Block Entity */
 
     @Override
@@ -71,47 +84,47 @@ public class BoilerBlock extends BaseEntityBlock {
         return !level.isClientSide() ? createTickerHelper(blockEntityType, BlockEntityRegistry.BOILER_BE.get(), BoilerBlockEntity::serverTick) : null;
     }
 
+
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof BoilerBlockEntity boilerBlockEntity) {
+            BoilerInventory inventory = boilerBlockEntity.getInventory();
+            ItemResource resource = ItemResource.of(stack);
 
             if (!stack.isEmpty() && !stack.is(Items.WATER_BUCKET)){
-                for (int i = 0; i < boilerBlockEntity.inventory.getSlots(); i++){
-                    ItemStack bStack = boilerBlockEntity.inventory.getStackInSlot(i);
-
-                        if (!bStack.isEmpty() && ItemStack.isSameItemSameComponents(bStack, stack)){
-                            ItemStack toInsert = stack.copy();
-                            toInsert.setCount(1);
-                            boilerBlockEntity.inventory.insertItem(i, toInsert, false);
-                            stack.shrink(1);
-                            level.playSound(player, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1, 2);
+                if (!level.isClientSide()){
+                    for (int i = 0; i < inventory.getSlots(); i++) {
+                        ItemStack current = inventory.getStackInSlot(i);
+                        if (!current.isEmpty() && ItemStack.isSameItemSameComponents(current, stack)){
+                            if (current.getCount() >= inventory.getMaxStackSize()){
+                                System.out.println("slot " + i + " is full");
+                                return InteractionResult.SUCCESS;
+                            }
+                        }
+                        int inserted = inventory.insert(i, resource, 1, null);
+                        if (inserted > 0){
+                            stack.shrink(inserted);
+                            level.playSound(null, pos, SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 2, 1);
                             return InteractionResult.SUCCESS;
                         }
                     }
-                for (int i = 0; i < boilerBlockEntity.inventory.getSlots(); i++){
-                    if (boilerBlockEntity.inventory.getStackInSlot(i).isEmpty()){
-                        ItemStack toInsert = stack.copy();
-                        toInsert.setCount(1);
-
-                        boilerBlockEntity.inventory.insertItem(i, toInsert, false);
-                        stack.shrink(1);
-                        level.playSound(player, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1, 2);
-                        return InteractionResult.SUCCESS;
-                    }
                 }
+
+                return InteractionResult.SUCCESS;
             }
-
-
 
             if (stack.is(Items.WATER_BUCKET) && boilerBlockEntity.getWaterAmmount() < 3){
                 if (!level.isClientSide()) {
                     boilerBlockEntity.addWater(3);
                     if (!player.isCreative()) player.setItemInHand(hand, new ItemStack(Items.BUCKET));
+                    level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 2, 1);
+                    return InteractionResult.SUCCESS;
                 }
-                level.playSound(player, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 2, 1);
-                return InteractionResult.SUCCESS;
             }
         }
         return InteractionResult.PASS;
     }
+
 }
+
+

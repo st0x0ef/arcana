@@ -1,12 +1,15 @@
 package org.exodusstudio.arcana;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
@@ -15,7 +18,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.exodusstudio.arcana.client.Keybindings;
 import org.exodusstudio.arcana.client.gui.ResearchTableScreen;
+import org.exodusstudio.arcana.common.capabilities.ModCapabilities;
 import org.exodusstudio.arcana.common.data.theorie.TheoryRegistry;
+import org.exodusstudio.arcana.common.inventory.BoilerInventory;
 import org.exodusstudio.arcana.common.item.ArcanaCreativeModeTabs;
 import org.exodusstudio.arcana.common.particle.BoilingParticle;
 import org.exodusstudio.arcana.common.particle.EvaporationParticle;
@@ -64,9 +69,19 @@ public class Arcana {
             event.registerSpriteSet(ParticleRegistry.RESEARCH_PARTICLE.get(), ResearchParticle.Provider::new);
         }
 
+
         @SubscribeEvent
         public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
             //event.registerBlockEntityRenderer(BlockEntityRegistry.BOILER_BE.get(), BoilerBlockEntityRenderer::new);
+        }
+
+        @SubscribeEvent
+        public static void registerCapabilities(RegisterCapabilitiesEvent event){
+            event.registerBlockEntity(
+                    Capabilities.Item.BLOCK,
+                    BlockEntityRegistry.BOILER_BE.get(),
+                    (be, side) -> be.getInventory()
+            );
         }
     }
 }
