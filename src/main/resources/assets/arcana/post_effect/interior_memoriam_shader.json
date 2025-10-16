@@ -4,7 +4,8 @@
   },
   "passes": [
     {
-      "program": "minecraft:post/invert",
+      "vertex_shader": "minecraft:core/screenquad",
+      "fragment_shader": "minecraft:post/invert",
       "inputs": [
         {
           "sampler_name": "In",
@@ -12,21 +13,34 @@
         }
       ],
       "output": "swap",
-      "uniforms": [
-        {
-          "name": "InverseAmount",
-          "values": [ 0.8 ]
-        }
-      ]
+      "uniforms": {
+        "InvertConfig": [
+          {
+            "name": "InverseAmount",
+            "type": "float",
+            "value": 0.8
+          }
+        ]
+      }
     },
     {
-      "program": "minecraft:post/blit",
+      "vertex_shader": "minecraft:core/screenquad",
+      "fragment_shader": "minecraft:post/blit",
       "inputs": [
         {
           "sampler_name": "In",
           "target": "swap"
         }
       ],
+      "uniforms": {
+        "BlitConfig": [
+          {
+            "name": "ColorModulate",
+            "type": "vec4",
+            "value": [ 1.0, 1.0, 1.0, 1.0 ]
+          }
+        ]
+      },
       "output": "minecraft:main"
     }
   ]
