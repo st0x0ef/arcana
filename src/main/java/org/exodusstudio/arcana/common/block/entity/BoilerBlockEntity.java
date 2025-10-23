@@ -1,20 +1,26 @@
 package org.exodusstudio.arcana.common.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.exodusstudio.arcana.common.block.BoilerBlock;
 import org.exodusstudio.arcana.common.boiler_recipe.BoilerRecipe;
 import org.exodusstudio.arcana.common.boiler_recipe.BoilerRecipes;
+import org.exodusstudio.arcana.common.capabilities.ModCapabilities;
+import org.exodusstudio.arcana.common.inventory.BoilerInventory;
 import org.exodusstudio.arcana.common.particle.ParticleRegistry;
 import org.exodusstudio.arcana.common.registry.BlockEntityRegistry;
 
@@ -25,26 +31,15 @@ public class BoilerBlockEntity extends BlockEntity {
     private int waterAmmount = 0;
     private int heatTime = 0;
 
+    private final BoilerInventory inventory = new BoilerInventory();
 
-
-    public final ItemStackHandler inventory = new ItemStackHandler(5) {
-
-        @Override
-        protected void onContentsChanged(int slot) {
-            setChanged();
-            if (!level.isClientSide()) {
-                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
-            }
-        }
-
-        @Override
-        protected int getStackLimit(int slot, ItemStack stack) {
-            return 5;
-        }
-    };
 
     public BoilerBlockEntity( BlockPos pos, BlockState blockState) {
         super(BlockEntityRegistry.BOILER_BE.get(), pos, blockState);
+    }
+
+    public BoilerInventory getInventory(){
+        return inventory;
     }
 
     public static void spawnParticles(BlockPos pos, Level level){
@@ -55,9 +50,9 @@ public class BoilerBlockEntity extends BlockEntity {
 
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, BoilerBlockEntity be) {
-
+/*
         BoilerRecipe recipe = be.findMatchingRecipe();
-
+*/
         if (be.waterAmmount > 0) {
             BlockState below = level.getBlockState(pos.below());
             boolean heatSource = below.is(Blocks.FIRE) || below.is(Blocks.CAMPFIRE) || below.is(Blocks.LAVA);
@@ -79,11 +74,11 @@ public class BoilerBlockEntity extends BlockEntity {
                     if (pflag){
                         spawnParticles(pos, level);
                     }
-
+/*
                     if (recipe != null) {
                         be.craftRecipe(recipe, pos, level);
                     }
-
+*/
                 }
 
             } else {
@@ -99,7 +94,7 @@ public class BoilerBlockEntity extends BlockEntity {
             }
         }
     }
-
+/*
     //This returns the total ammount of items inside the inventory
     public int getTotalItemCount(){
         int total = 0;
@@ -119,7 +114,7 @@ public class BoilerBlockEntity extends BlockEntity {
         }
         return total;
     }
-
+*//*
     public BoilerRecipe findMatchingRecipe(){
         for (BoilerRecipe recipe : BoilerRecipes.getRecipes()){
             if (hasIngredients(recipe.inputs())){
@@ -127,8 +122,8 @@ public class BoilerBlockEntity extends BlockEntity {
             }
         }
         return null;
-    }
-
+    }*/
+/*
     public void craftRecipe(BoilerRecipe recipe, BlockPos pos, Level level){
         if (!hasIngredients(recipe.inputs())) return;
 
@@ -139,7 +134,8 @@ public class BoilerBlockEntity extends BlockEntity {
         level.addFreshEntity(entity);
 
     }
-
+*/
+    /*
     public boolean hasIngredients(Map<Item, Integer> required){
         for (var entry : required.entrySet()){
             Item item = entry.getKey();
@@ -147,8 +143,8 @@ public class BoilerBlockEntity extends BlockEntity {
             if (getItemCount(item) < needed) return false;
         }
         return true;
-    }
-
+    }*/
+/*
     public boolean consumeIngredients(Map<Item, Integer> required){
         if (!hasIngredients(required)) return false;
 
@@ -168,7 +164,7 @@ public class BoilerBlockEntity extends BlockEntity {
         setChanged();
         return true;
     }
-
+*/
 
 
 
@@ -198,6 +194,10 @@ public class BoilerBlockEntity extends BlockEntity {
         }
     }
 
+
+    
+
+
     public int getWaterAmmount(){
         return this.waterAmmount;
     }
@@ -207,6 +207,15 @@ public class BoilerBlockEntity extends BlockEntity {
         super.saveAdditional(output);
         output.putInt("Water", waterAmmount);
         output.putInt("HeatTime", heatTime);
+
+        for (int i = 0; i < inventory.getSlots(); i++){
+            ItemStack stack = inventory.getStackInSlot(i);
+            if (!stack.isEmpty()){
+                ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
+                output.putString("Item" + i, id.toString());
+                output.putInt("Count" + i, stack.getCount());
+            }
+        }
     }
 
     @Override
@@ -214,5 +223,22 @@ public class BoilerBlockEntity extends BlockEntity {
         super.loadAdditional(input);
         this.waterAmmount = input.getInt("Water").orElse(0);
         this.heatTime = input.getInt("HeatTime").orElse(0);
+
+        for (int i = 0; i < inventory.getSlots(); i++){
+            String id = input.getStringOr("Item" + i, "");
+            int cnt = input.getIntOr("Count" + i, 0);
+
+            if (!id.isEmpty() && cnt > 0){
+                ResourceLocation rl = ResourceLocation.tryParse(id);
+                if (rl != null){
+                    Item item = BuiltInRegistries.ITEM.getValue(rl);
+                    if (item != Items.AIR && item != null){
+                        inventory.setStackInSlot(i, new ItemStack(item, cnt));
+                        continue;
+                    }
+                }
+            }
+            inventory.setStackInSlot(i, ItemStack.EMPTY);
+        }
     }
 }

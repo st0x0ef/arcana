@@ -3,11 +3,15 @@ package org.exodusstudio.arcana.client.gui;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.mojang.blaze3d.resource.GraphicsResourceAllocator;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.CachedOrthoProjectionMatrixBuffer;
+import net.minecraft.client.renderer.PostChain;
+import net.minecraft.client.renderer.PostChainConfig;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -25,6 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -35,7 +40,7 @@ public class InteriumMemoriamScreen extends Screen  {
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, InteriumMemoriamScreen.INTERIOR_MEMORIAM, 0, 0, 0.0F, 0.0F, guiGraphics.guiWidth(), guiGraphics.guiHeight(), guiGraphics.guiWidth(), guiGraphics.guiHeight(), i);
     }
 
-    private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(Arcana.MODID, "interior_memoriam_shader" );
+
 
     @Override
     public void renderBackground(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
@@ -45,7 +50,7 @@ public class InteriumMemoriamScreen extends Screen  {
     }
 
     private static final ResourceLocation INTERIOR_MEMORIAM = ResourceLocation.fromNamespaceAndPath(Arcana.MODID,"textures/misc/memoriam_overlay.png");
-
+    private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(Arcana.MODID, "interior_memoriam_shader");
 
     private static final List<DragWidget> customWidgets = new ArrayList<>();
     private final List<DragWidget> orderedWidgets = new ArrayList<>();
@@ -93,6 +98,7 @@ public class InteriumMemoriamScreen extends Screen  {
             addCustomWidget();
             shouldAddWidget = false;
         }
+
     }
 
     @NotNull
@@ -205,6 +211,10 @@ public class InteriumMemoriamScreen extends Screen  {
         super(Component.literal("InteriorMemoriam"));
         Minecraft.getInstance().gameRenderer.setPostEffect(BACKGROUND);
     }
+
+
+
+
 
     @Override
     public boolean isPauseScreen() {
