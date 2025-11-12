@@ -41,8 +41,8 @@ public class Arcana {
     public Arcana(IEventBus modEventBus, ModContainer modContainer) {
         BlockRegistry.register(modEventBus);
         ItemRegistry.register(modEventBus);
-        ArcanaCreativeModeTabs.register(modEventBus);
         BlockEntityRegistry.register(modEventBus);
+        ArcanaCreativeModeTabs.register(modEventBus);
         DataComponentRegistry.register(modEventBus);
         DataAttachmentRegistry.register(modEventBus);
         MenuRegistry.register(modEventBus);

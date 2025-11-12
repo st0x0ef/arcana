@@ -1,6 +1,7 @@
 package org.exodusstudio.arcana.common.registry;
 
-import net.minecraft.core.registries.BuiltInRegistries;
+
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -12,7 +13,7 @@ import java.util.function.Supplier;
 
 public class BlockEntityRegistry {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
-            DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Arcana.MODID);
+            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Arcana.MODID);
 
     public static final Supplier<BlockEntityType<ResearchTableEntity>> RESEARCH_TABLE_BE =
             BLOCK_ENTITIES.register("research_table_be",

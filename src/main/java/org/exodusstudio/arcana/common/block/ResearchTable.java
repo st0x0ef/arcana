@@ -19,11 +19,13 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -41,7 +43,7 @@ import java.util.List;
 public class ResearchTable extends BaseEntityBlock {
     public static final EnumProperty<RT_State> RT_ACTIVATED;
     public static final EnumProperty<Direction> FACING;
-    public static final MapCodec<ResearchTable> CODEC = simpleCodec(ResearchTable::new);
+    //public static final MapCodec<ResearchTable> CODEC = simpleCodec(ResearchTable::new);
     private boolean IsCompleted = false;
     private BlockPos masterPos = null;
     private static final VoxelShape TableShape = Block.box(0, 0,0, 16, 14, 16);
@@ -51,16 +53,13 @@ public class ResearchTable extends BaseEntityBlock {
         return TableShape;
     }
 
-    public ResearchTable() {
-        this(Properties.ofFullCopy(Blocks.BAMBOO_BLOCK)
-                .strength(2.0f)
-                .sound(SoundType.WOOD));
-    }
 
-    public ResearchTable(Properties properties) {
+
+    public ResearchTable(BlockBehaviour.Properties properties) {
         super(properties);
-        registerDefaultState(this.defaultBlockState()
-                .setValue(RT_ACTIVATED, RT_State.OFF));
+        this.registerDefaultState(this.defaultBlockState()
+                .setValue(RT_ACTIVATED, RT_State.OFF)
+                .setValue(FACING, Direction.NORTH));
     }
 
     @Override
@@ -251,7 +250,7 @@ public class ResearchTable extends BaseEntityBlock {
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
+        return simpleCodec(ResearchTable::new);
     }
 
     @Override

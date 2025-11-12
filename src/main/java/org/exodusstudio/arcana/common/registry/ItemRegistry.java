@@ -13,24 +13,25 @@ public class ItemRegistry {
 
     public static final DeferredItem<Item> SCRIBBLING_TOOL = ITEMS.registerItem(
             "scribbling_tool",
-            ArcanaScribblingToolItem::new,
-            new Item.Properties().stacksTo(1));
+             ArcanaScribblingToolItem::new,
+            P -> P.stacksTo(1));
+
     public static final DeferredItem<Item> SCRIBBLED_NOTE = ITEMS.registerItem(
             "scribbled_note",
             ArcanaScribbledNoteItem::new,
-            new Item.Properties().stacksTo(1));
+            P -> P.stacksTo(1));
     public static final DeferredItem<Item> OLD_NOTE = ITEMS.registerItem("old_note",
             ArcanaOldNoteItem::new,
-            new Item.Properties().stacksTo(1));
+            P -> P.stacksTo(1));
     public static final DeferredItem<Item> MATE = ITEMS.registerItem("mate",
             ArcanaMateItem::new,
-            new Item.Properties().stacksTo(1));
+            P -> P.stacksTo(1));
     public static final DeferredItem<Item> PROTO_WAND = ITEMS.registerItem(
             "proto_wand", ArcanaProtoWand::new,
-            new Item.Properties().stacksTo(1));
+            P -> P.stacksTo(1));
     public static final DeferredItem<BlockItem> NITOR = ITEMS.registerSimpleBlockItem("nitor",
             () -> BlockRegistry.NITOR_BLOCK.get(), //dont follow the yellow it lies
-            new Item.Properties().stacksTo(1));
+            P -> P.stacksTo(1));
 
 
     public static final DeferredItem<Item> NHIL_CRYSTAL = ITEMS.registerSimpleItem("nhil_crystal");

@@ -10,22 +10,24 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import org.exodusstudio.arcana.client.menu.ResearchTableMenu;
 import org.exodusstudio.arcana.common.registry.BlockEntityRegistry;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ResearchTableEntity extends BlockEntity implements MenuProvider {
-    public final ItemStackHandler inventory = new ItemStackHandler(1) {
+    public final ItemStacksResourceHandler inventory = new ItemStacksResourceHandler(1) {
         @Override
-        protected int getStackLimit(int slot, ItemStack stack) {
-            return 1;
+        protected int getCapacity(int index, ItemResource resource) {
+            return 1; // Limit to 1 item per slot, matching the original behavior
         }
 
-        @Override
-        protected void onContentsChanged(int slot) {
+
+        private void onContentsChanged(int index) {
             setChanged();
-            if(!level.isClientSide())
-            {
+            if (level != null && !level.isClientSide()) {
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
             }
         }
@@ -35,11 +37,11 @@ public class ResearchTableEntity extends BlockEntity implements MenuProvider {
         super(BlockEntityRegistry.RESEARCH_TABLE_BE.get(), pos, blockState);
     }
 
-
+    
 
 
     @Override
-    public Component getDisplayName() {
+    public @NotNull Component getDisplayName() {
         return Component.translatable("arcana.block_entity.research_table");
     }
 
