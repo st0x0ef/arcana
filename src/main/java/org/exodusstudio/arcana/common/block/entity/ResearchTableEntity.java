@@ -10,8 +10,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.transfer.IndexModifier;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.exodusstudio.arcana.client.menu.ResearchTableMenu;
 import org.exodusstudio.arcana.common.registry.BlockEntityRegistry;
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +32,23 @@ public class ResearchTableEntity extends BlockEntity implements MenuProvider {
             if (level != null && !level.isClientSide()) {
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
             }
+        }
+    };
+
+    public final IndexModifier<ItemResource> modifier = (slot, resource, amount) -> {
+        try (var tx = Transaction.openRoot()) {
+            // Clear existing
+            var existing = inventory.getResource(slot);
+            if (!existing.isEmpty()) {
+                inventory.extract(slot, existing, inventory.getAmountAsInt(slot), tx);
+            }
+
+            // Insert new
+            if (!resource.isEmpty() && amount > 0) {
+                inventory.insert(slot, resource, amount, tx);
+            }
+
+            tx.commit();
         }
     };
 

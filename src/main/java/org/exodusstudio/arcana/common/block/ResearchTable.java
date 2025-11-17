@@ -41,8 +41,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ResearchTable extends BaseEntityBlock {
-    public static final EnumProperty<RT_State> RT_ACTIVATED;
-    public static final EnumProperty<Direction> FACING;
     //public static final MapCodec<ResearchTable> CODEC = simpleCodec(ResearchTable::new);
     private boolean IsCompleted = false;
     private BlockPos masterPos = null;
@@ -53,10 +51,16 @@ public class ResearchTable extends BaseEntityBlock {
         return TableShape;
     }
 
-
+    public static final EnumProperty<RT_State> RT_ACTIVATED = EnumProperty.create("rt_activated", RT_State.class);
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public ResearchTable(BlockBehaviour.Properties properties) {
-        super(properties);
+        super(properties
+                .mapColor(MapColor.WOOD) // Add material properties
+                .strength(5.0F, 6.0F)   // Move strength here from registry
+                .requiresCorrectToolForDrops()
+                .noOcclusion());
+
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(RT_ACTIVATED, RT_State.OFF)
                 .setValue(FACING, Direction.NORTH));
@@ -88,10 +92,7 @@ public class ResearchTable extends BaseEntityBlock {
         return InteractionResult.SUCCESS;
     }
 
-    static {
-        RT_ACTIVATED = EnumProperty.create("rt_activated", RT_State.class);
-        FACING = BlockStateProperties.HORIZONTAL_FACING;
-    }
+
 
     protected void useScribblingToolOn(BlockState state, Level level, BlockPos pos, Player player)
     {

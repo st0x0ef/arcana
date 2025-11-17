@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.exodusstudio.arcana.Arcana;
 
@@ -26,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 public class BlockRegistry {
 
@@ -37,31 +39,34 @@ public class BlockRegistry {
     private static final Map<DeferredBlock<?>, Supplier<Item>> BLOCK_TO_ITEM = new HashMap<>();
 
 
-    public static final DeferredBlock<ResearchTable> RESEARCH_TABLE = registerSpecificBlock("research_table", ResearchTable.class,
-            BlockBehaviour.Properties.of().strength(5.0F, 6.0F).requiresCorrectToolForDrops().noOcclusion(),
-            new Item.Properties().stacksTo(1));
+    public static final DeferredBlock<ResearchTable> RESEARCH_TABLE = registerSpecificBlock("research_table",
+            ResearchTable::new,
+            props -> props.strength(5.0F, 6.0F).requiresCorrectToolForDrops().noOcclusion(),
+            props -> props.stacksTo(1));
 
-    public static final DeferredBlock<NitorBlock> NITOR_BLOCK = registerSpecificBlock("nitor_block", NitorBlock.class,
-            BlockBehaviour.Properties.of().noCollision().instabreak().noOcclusion(),
-            new Item.Properties().stacksTo(1));
+    public static final DeferredBlock<NitorBlock> NITOR_BLOCK = registerSpecificBlock("nitor_block",
+            NitorBlock::new,
+            props -> props.noCollision().instabreak().noOcclusion(),
+            props -> props.stacksTo(1));
 
-    public static final DeferredBlock<BoilerBlock> BOILER_BLOCK = registerSpecificBlock("boiler", BoilerBlock.class,
-            BlockBehaviour.Properties.of().strength(5.3f, 6.0f).noOcclusion(),
-            new Item.Properties().stacksTo(1));
+    public static final DeferredBlock<BoilerBlock> BOILER_BLOCK = registerSpecificBlock("boiler",
+            BoilerBlock::new,
+            props -> props.strength(5.3f, 6.0f).noOcclusion(),
+            props -> props.stacksTo(1));
 
-    public static final DeferredBlock<WeepingPetal> WEEPING_PETAL = registerSpecificBlock("weeping_petal", WeepingPetal.class,
-            BlockBehaviour.Properties.of().instabreak().noOcclusion(),
-            new Item.Properties().stacksTo(1));
+    public static final DeferredBlock<WeepingPetal> WEEPING_PETAL = registerSpecificBlock("weeping_petal",
+            WeepingPetal::new,
+            props -> props.instabreak().noOcclusion(),
+            props -> props.stacksTo(1));
 
-    public static final DeferredBlock<Block> DEFAULT_LILLIE =
-            BLOCKS.register("default_lillie",
-                    () -> new Block(BlockBehaviour.Properties.of().instabreak().noCollision()));
+    public static final DeferredBlock<Block> DEFAULT_LILLIE = registerBasicBlock("default_lillie",
+            props -> props.instabreak().noCollision(),
+            props -> props);
 
-    public static final DeferredBlock<lillie_block> LILLIE_BLOCK =
-            BLOCKS.register("lillie",
-                    () -> new lillie_block(DEFAULT_LILLIE.get(),
-                            BlockBehaviour.Properties.of().noCollision().instabreak()));
-
+    public static final DeferredBlock<lillie_block> LILLIE_BLOCK = registerSpecificBlock("lillie",
+            props -> new lillie_block(DEFAULT_LILLIE, props),
+            props -> props.noCollision().instabreak(),
+            props -> props);
     ;
 
     //public static final DeferredBlock<NimbusStone> NIMBUS_STONE = registerSpecificBlock("nimbus_stone", NimbusStone.class,
@@ -72,44 +77,34 @@ public class BlockRegistry {
 
     private static <T extends Block> DeferredBlock<T> registerSpecificBlock(
             String name,
-            Class<T> blockClass,
-            BlockBehaviour.Properties blockProperties,
-            Item.Properties itemProperties
-    )
-    {
-        Supplier<T> block = () -> {
-            try {
-                return blockClass.getConstructor(BlockBehaviour.Properties.class)
-                        .newInstance(blockProperties);
-            } catch (Exception e) {
-                throw new RuntimeException("Error when instantiating: " + name, e);
-            }
-        };
-
-        DeferredBlock<T> toReturn = BLOCKS.register(name, block);
+            Function<BlockBehaviour.Properties, T> blockConstructor,
+            UnaryOperator<BlockBehaviour.Properties> blockProperties,
+            UnaryOperator<Item.Properties> itemProperties
+    ) {
+        DeferredBlock<T> toReturn = BLOCKS.registerBlock(name, blockConstructor, blockProperties);
         Supplier<Item> itemSupplier = registerBlockItem(name, toReturn, itemProperties);
         BLOCK_TO_ITEM.put(toReturn, itemSupplier);
         return toReturn;
     }
 
-    private static DeferredBlock<Block> registerBasicBlock(String name, BlockBehaviour.Properties blockProperties, Item.Properties itemProperties) {
-        Supplier<Block> block = () -> new Block(blockProperties);
-        DeferredBlock<Block> toReturn = BLOCKS.register(name, block);
+    private static DeferredBlock<Block> registerBasicBlock(
+            String name,
+            UnaryOperator<BlockBehaviour.Properties> blockProperties,
+            UnaryOperator<Item.Properties> itemProperties
+    ) {
+        DeferredBlock<Block> toReturn = BLOCKS.registerBlock(name, Block::new, blockProperties);
         Supplier<Item> itemSupplier = registerBlockItem(name, toReturn, itemProperties);
         BLOCK_TO_ITEM.put(toReturn, itemSupplier);
         return toReturn;
     }
 
-
-    private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block, Item.Properties itemProperties) {
-        DeferredBlock<T> toReturn = BLOCKS.register(name, block);
-        registerBlockItem(name, toReturn, itemProperties);
-        return toReturn;
-    }
-
-    private static <T extends Block> Supplier<Item> registerBlockItem(String name, DeferredBlock<T> block, Item.Properties itemProperties) {
-        return ItemRegistry.ITEMS.register(name,
-                () -> new BlockItem(block.get(), itemProperties));
+    private static <T extends Block> Supplier<Item> registerBlockItem(
+            String name,
+            DeferredBlock<T> block,
+            UnaryOperator<Item.Properties> itemProperties
+    ) {
+        DeferredItem<BlockItem> deferredItem = ItemRegistry.ITEMS.registerSimpleBlockItem(name, block::get, itemProperties);
+        return deferredItem::get;
     }
 
     public static void register(IEventBus eventBus)

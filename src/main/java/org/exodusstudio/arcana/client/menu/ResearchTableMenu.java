@@ -8,7 +8,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 import org.exodusstudio.arcana.common.block.entity.ResearchTableEntity;
 import org.exodusstudio.arcana.common.registry.BlockRegistry;
 import org.exodusstudio.arcana.common.registry.MenuRegistry;
@@ -16,6 +16,9 @@ import org.exodusstudio.arcana.common.registry.MenuRegistry;
 public class ResearchTableMenu extends AbstractContainerMenu {
     public final ResearchTableEntity researchTableEntity;
     private final Level level;
+
+
+
     public ResearchTableMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
         this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()));
     }
@@ -26,7 +29,12 @@ public class ResearchTableMenu extends AbstractContainerMenu {
         this.researchTableEntity = (ResearchTableEntity) blockEntity;
         this.level = inv.player.level();
 
-        this.addSlot(new SlotItemHandler(this.researchTableEntity.inventory, 0, 80, 35));
+        this.addSlot(new ResourceHandlerSlot(
+                this.researchTableEntity.inventory,
+                this.researchTableEntity.modifier,
+                0,
+                80, 35
+        ));
     }
 
 
