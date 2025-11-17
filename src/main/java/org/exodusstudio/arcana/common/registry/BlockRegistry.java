@@ -60,12 +60,12 @@ public class BlockRegistry {
             props -> props.stacksTo(1));
 
     public static final DeferredBlock<Block> DEFAULT_LILLIE = registerBasicBlock("default_lillie",
-            props -> props.instabreak().noCollision(),
+            BlockBehaviour.Properties::instabreak,
             props -> props);
 
     public static final DeferredBlock<lillie_block> LILLIE_BLOCK = registerSpecificBlock("lillie",
             props -> new lillie_block(DEFAULT_LILLIE, props),
-            props -> props.noCollision().instabreak(),
+            BlockBehaviour.Properties::instabreak,
             props -> props);
     ;
 
