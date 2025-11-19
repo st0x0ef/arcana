@@ -54,6 +54,8 @@ public class ResearchTable extends BaseEntityBlock {
     public static final EnumProperty<RT_State> RT_ACTIVATED = EnumProperty.create("rt_activated", RT_State.class);
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
 
+
+
     public ResearchTable(BlockBehaviour.Properties properties) {
         super(properties
                 .mapColor(MapColor.WOOD) // Add material properties
@@ -91,7 +93,6 @@ public class ResearchTable extends BaseEntityBlock {
 
         return InteractionResult.SUCCESS;
     }
-
 
 
     protected void useScribblingToolOn(BlockState state, Level level, BlockPos pos, Player player)

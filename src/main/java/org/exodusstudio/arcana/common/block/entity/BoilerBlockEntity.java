@@ -1,5 +1,6 @@
 package org.exodusstudio.arcana.common.block.entity;
 
+import com.sun.jdi.connect.spi.TransportService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -15,11 +16,15 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import org.exodusstudio.arcana.common.block.BoilerBlock;
 import org.exodusstudio.arcana.common.boiler_recipe.BoilerRecipe;
 import org.exodusstudio.arcana.common.boiler_recipe.BoilerRecipes;
 import org.exodusstudio.arcana.common.capabilities.ModCapabilities;
+import org.exodusstudio.arcana.common.fluid_storage.BoilerFluidStorage;
 import org.exodusstudio.arcana.common.inventory.BoilerInventory;
 import org.exodusstudio.arcana.common.particle.ParticleRegistry;
 import org.exodusstudio.arcana.common.registry.BlockEntityRegistry;
@@ -28,19 +33,21 @@ import java.util.*;
 
 public class BoilerBlockEntity extends BlockEntity {
 
-    private int waterAmmount = 0;
-    private int heatTime = 0;
 
     private final BoilerInventory inventory = new BoilerInventory();
-
+    public final BoilerFluidStorage fluidStorage = new BoilerFluidStorage(this);
 
     public BoilerBlockEntity( BlockPos pos, BlockState blockState) {
         super(BlockEntityRegistry.BOILER_BE.get(), pos, blockState);
     }
 
+
+    private int heatTime = 0;
+
     public BoilerInventory getInventory(){
         return inventory;
     }
+    public BoilerFluidStorage getFluidStorage() {return fluidStorage;}
 
     public static void spawnParticles(BlockPos pos, Level level){
         ((ServerLevel) level).sendParticles(ParticleRegistry.EVAPORATION_PARTICLE.get(),
@@ -48,12 +55,30 @@ public class BoilerBlockEntity extends BlockEntity {
                 4, 0.1, 0, 0.1, 0.2);
     }
 
+    public int getFluidAmount(){
+        return (int) this.fluidStorage.getAmountAsLong(0);
+    }
+
+    public int tryInsertFluid(FluidResource resource, int amount){
+        int inserted = this.fluidStorage.insert(0, resource, amount, null);
+        if (inserted > 0) onFluidChanged();
+        return inserted;
+    }
+
+    public int tryExtractFluid(int amount){
+        FluidResource current = this.fluidStorage.getResource(0);
+        if (current == null || current.isEmpty()) return 0;
+
+        int extracted = this.fluidStorage.extract(0, current, amount, null);
+        if (extracted > 0) onFluidChanged();
+        return extracted;
+    }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, BoilerBlockEntity be) {
 /*
         BoilerRecipe recipe = be.findMatchingRecipe();
 */
-        if (be.waterAmmount > 0) {
+        if (be.getFluidAmount() > 0) {
             BlockState below = level.getBlockState(pos.below());
             boolean heatSource = below.is(Blocks.FIRE) || below.is(Blocks.CAMPFIRE) || below.is(Blocks.LAVA);
 
@@ -68,7 +93,7 @@ public class BoilerBlockEntity extends BlockEntity {
                     boolean flag = be.heatTime % 1200 == 0;
                     boolean pflag = be.heatTime % 20 == 0;
                     if (flag){
-                        be.removeWater(1);
+                        be.tryExtractFluid(1000);
                         be.heatTime = 0;
                     }
                     if (pflag){
@@ -167,7 +192,7 @@ public class BoilerBlockEntity extends BlockEntity {
 */
 
 
-
+/*
     public void addWater(int ammount){
         this.waterAmmount = Math.min(this.waterAmmount + ammount, 3);
         updateWaterLevel();
@@ -179,13 +204,16 @@ public class BoilerBlockEntity extends BlockEntity {
         updateWaterLevel();
         setChanged();
     }
-
+*/
     private void updateWaterLevel() {
         if (level != null){
-            int levelInt = this.waterAmmount;
-            if (waterAmmount > 0) levelInt = 1;
-            if (waterAmmount > 1) levelInt = 2;
-            if (waterAmmount > 2) levelInt = 3;
+            int amt = getFluidAmount();
+            int levelInt = 0;
+            int cap = BoilerFluidStorage.CAPACITY;
+            if (amt <= 0) levelInt = 0;
+            else if (amt <= cap / 3) levelInt = 1;
+            else if (amt <= (2 * cap) / 3) levelInt = 2;
+            else levelInt = 3;
 
             BlockState state = level.getBlockState(worldPosition);
             if (state.getBlock() instanceof BoilerBlock && state.getValue(BoilerBlock.WATER_LEVEL) != levelInt){
@@ -195,24 +223,31 @@ public class BoilerBlockEntity extends BlockEntity {
     }
 
 
-    
+    public void onFluidChanged(){
+        setChanged();
+        updateWaterLevel();
+        if (level != null){
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        }
+    }
 
 
     public int getWaterAmmount(){
-        return this.waterAmmount;
+        return getFluidAmount();
     }
 
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
-        output.putInt("Water", waterAmmount);
+        fluidStorage.saveTo(output);
+
         output.putInt("HeatTime", heatTime);
 
         for (int i = 0; i < inventory.getSlots(); i++){
             ItemStack stack = inventory.getStackInSlot(i);
             if (!stack.isEmpty()){
-                ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-                output.putString("Item" + i, id.toString());
+                ResourceLocation id1 = BuiltInRegistries.ITEM.getKey(stack.getItem());
+                output.putString("Item" + i, id1.toString());
                 output.putInt("Count" + i, stack.getCount());
             }
         }
@@ -221,7 +256,7 @@ public class BoilerBlockEntity extends BlockEntity {
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        this.waterAmmount = input.getInt("Water").orElse(0);
+        fluidStorage.loadFrom(input);
         this.heatTime = input.getInt("HeatTime").orElse(0);
 
         for (int i = 0; i < inventory.getSlots(); i++){
@@ -240,5 +275,6 @@ public class BoilerBlockEntity extends BlockEntity {
             }
             inventory.setStackInSlot(i, ItemStack.EMPTY);
         }
+        updateWaterLevel();
     }
 }

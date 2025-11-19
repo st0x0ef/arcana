@@ -16,12 +16,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.exodusstudio.arcana.Arcana;
 
 //import org.exodusstudio.arcana.common.block.NimbusStone;
-import org.exodusstudio.arcana.common.block.BoilerBlock;
-import org.exodusstudio.arcana.common.block.NitorBlock;
-import org.exodusstudio.arcana.common.block.ResearchTable;
-import org.exodusstudio.arcana.common.block.WeepingPetal;
-import org.exodusstudio.arcana.common.block.water_lillie.default_lillie;
-import org.exodusstudio.arcana.common.block.water_lillie.lillie_block;
+import org.exodusstudio.arcana.common.block.*;
+//import org.exodusstudio.arcana.common.block.water_lillie.default_lillie;
+//import org.exodusstudio.arcana.common.block.water_lillie.lillie_block;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,14 +56,20 @@ public class BlockRegistry {
             props -> props.instabreak().noOcclusion(),
             props -> props.stacksTo(1));
 
+    public static final DeferredBlock<FirePoppy> FIRE_POPPY = registerSpecificBlock("fire_poppy",
+            FirePoppy::new,
+            props -> props.instabreak().lightLevel(state -> state.getValue(FirePoppy.AWAKE) ? 0 : 8).noCollision(),
+            props -> props.stacksTo(1));
+
     public static final DeferredBlock<Block> DEFAULT_LILLIE = registerBasicBlock("default_lillie",
             props -> props.instabreak().noCollision(),
             props -> props);
-
+/*
     public static final DeferredBlock<lillie_block> LILLIE_BLOCK = registerSpecificBlock("lillie",
             props -> new lillie_block(DEFAULT_LILLIE, props),
             props -> props.noCollision().instabreak(),
             props -> props);
+*/
     ;
 
     //public static final DeferredBlock<NimbusStone> NIMBUS_STONE = registerSpecificBlock("nimbus_stone", NimbusStone.class,
@@ -97,6 +100,8 @@ public class BlockRegistry {
         BLOCK_TO_ITEM.put(toReturn, itemSupplier);
         return toReturn;
     }
+
+
 
     private static <T extends Block> Supplier<Item> registerBlockItem(
             String name,

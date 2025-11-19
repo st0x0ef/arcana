@@ -62,6 +62,8 @@ public class ArcanaEnUsGenerator extends LanguageProvider {
         addItem(ItemRegistry.PROTO_WAND, "Proto Wand");
         addBlock(BlockRegistry.WEEPING_PETAL, "Weeping Petal");
         addItem(BlockRegistry.getItemFromBlock(BlockRegistry.WEEPING_PETAL), "Weeping Petal");
+        addBlock(BlockRegistry.FIRE_POPPY, "Fire Poppy");
+        addItem(BlockRegistry.getItemFromBlock(BlockRegistry.FIRE_POPPY), "Fire Poppy");
         addItem(ItemRegistry.WEEPING_POWDER, "Weeping Powder");
         addItem(ItemRegistry.ALCHEMICAL_STEEL, "Alchemical Steel");
     }
