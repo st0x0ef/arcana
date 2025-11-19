@@ -1,0 +1,19 @@
+// 1.21.9	2025-10-03T03:11:19.5983651	Model Definitions - arcana
+c228b0ba17686a503f77cca394505bf94b8af488 assets/arcana/items/alchemical_steel.json
+b6cdffe3ef9fc7858fb55f0813c31879010598be assets/arcana/items/ancient_feather.json
+6cbc940f708ab72146ef2629f82804b9ed037a6b assets/arcana/items/ink_bottle.json
+80a32ab0d21a1c2247c0e16ee34a509e039262e0 assets/arcana/items/nhil_crystal.json
+5c7a610b789657e62492fb763152129628342373 assets/arcana/items/nhil_powder.json
+b7e8f50831ed4b49c0792dcb68b3b24525883dac assets/arcana/items/old_note.json
+e8a1b337f480e82cc5e8e1084f5e5bdce9870568 assets/arcana/items/scribbled_note.json
+fa43621a4bbc63a62c62874616a7997418bb8bc4 assets/arcana/items/scribbling_tool.json
+bae6c1baf9eb1396308eab13cee6e1f9f06e4b02 assets/arcana/items/weeping_powder.json
+0c8187467241adcde7c09976bfbb398a0f283149 assets/arcana/models/item/alchemical_steel.json
+a44f1bb0db22b8af00dee39e44928b795aac75eb assets/arcana/models/item/ancient_feather.json
+63622ead3a9e5c12926d95021a695a421649d402 assets/arcana/models/item/ink_bottle.json
+71e384bca593d1244c818fe4d63aa16a53652421 assets/arcana/models/item/nhil_crystal.json
+b482a44e2b50eb3001da145f419dc7f281efe6da assets/arcana/models/item/nhil_powder.json
+00793e1eca9bb9153b24f0d3679b3ec81008734f assets/arcana/models/item/old_note.json
+2231b27bad1eec2d678302e96cf033a9d3e5ebe4 assets/arcana/models/item/scribbled_note.json
+113638ac95575738fc6bc7bde447d8a0e78e064b assets/arcana/models/item/scribbling_tool.json
+0feb0548271ec43f2bb488dbce48adc07f01541a assets/arcana/models/item/weeping_powder.json
