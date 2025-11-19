@@ -1,21 +1,27 @@
 package org.exodusstudio.arcana.common.item;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import org.exodusstudio.arcana.common.registry.BlockRegistry;
 
 public class LillieBlockItem extends BlockItem {
     public LillieBlockItem(Block block, Properties properties) {
         super(block, properties);
     }
+
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
@@ -38,7 +44,7 @@ public class LillieBlockItem extends BlockItem {
             return InteractionResult.SUCCESS;
         }
 
-        // For other blocks, use normal placement
+
         return super.useOn(context);
     }
 }

@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "arcana:block/lily_pad_block"
+      },
+      {
+        "model": "arcana:block/lily_pad_block",
+        "y": 90
+      },
+      {
+        "model": "arcana:block/lily_pad_block",
+        "y": 180
+      },
+      {
+        "model": "arcana:block/lily_pad_block",
+        "y": 270
+      }
+    ]
+  }
+}

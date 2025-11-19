@@ -16,12 +16,14 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.IceBlock;
 import net.minecraft.world.level.block.VegetationBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.exodusstudio.arcana.common.registry.ItemRegistry;
+import org.jetbrains.annotations.Nullable;
 
 
 public class lily_padBlock extends VegetationBlock {
@@ -43,7 +45,16 @@ public class lily_padBlock extends VegetationBlock {
         super.entityInside(state, level, pos, entity, applier, intersects);
     }
 
-    
+    @Override
+    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
+        if(!level.isClientSide() && !player.isCreative()){
+            ItemStack itemStack = new ItemStack(ItemRegistry.LILLIE_BLOCK_ITEM.get());
+            popResource(level,pos,itemStack);
+            level.setBlock(pos,Blocks.LILY_PAD.defaultBlockState(),3);
+        }
+
+        super.playerDestroy(level, player, pos, state, blockEntity, tool);
+    }
 
     @Override
     protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {

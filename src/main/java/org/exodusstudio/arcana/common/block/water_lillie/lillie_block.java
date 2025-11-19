@@ -29,18 +29,21 @@ import java.util.Objects;
 
 public class lillie_block extends Block {
 
-    private final DeferredBlock<Block> waterLillieBlock;
+    private final DeferredBlock<sunken_lillie> waterLillieBlock;
 
-    public lillie_block(DeferredBlock<Block> waterLilie, Properties properties) {
+    public lillie_block(DeferredBlock<sunken_lillie> waterLilie, Properties properties) {
         super(properties);
         waterLillieBlock = waterLilie;
     }
+
+
 
     @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if(this.scanForWater(level, pos)){
             level.setBlock(pos, this.waterLillieBlock.get().defaultBlockState(), 3);
         }
+
     }
 
 

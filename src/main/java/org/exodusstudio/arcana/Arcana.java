@@ -1,5 +1,6 @@
 package org.exodusstudio.arcana;
 
+import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.api.distmarker.Dist;
@@ -10,10 +11,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.event.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.exodusstudio.arcana.client.Keybindings;
@@ -67,6 +65,20 @@ public class Arcana {
             event.registerSpriteSet(ParticleRegistry.EVAPORATION_PARTICLE.get(), EvaporationParticle.Provider::new);
             event.registerSpriteSet(ParticleRegistry.BOILING_PARTICLE.get(), BoilingParticle.Provider::new);
             event.registerSpriteSet(ParticleRegistry.RESEARCH_PARTICLE.get(), ResearchParticle.Provider::new);
+        }
+
+
+        @SubscribeEvent
+        public static void registerBlockColors(RegisterColorHandlersEvent.Block event){
+            event.register((state, level, pos, tintIndex) ->{
+                        if (tintIndex == 0) {
+                            return 0x208030;
+                        }
+
+                        return 0xFFFFFF;
+                    },
+                    BlockRegistry.LILY_PAD_BLOCK.get()
+            );
         }
 
 

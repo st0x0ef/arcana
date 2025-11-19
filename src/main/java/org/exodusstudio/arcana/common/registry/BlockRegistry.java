@@ -1,14 +1,10 @@
 package org.exodusstudio.arcana.common.registry;
 
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -20,9 +16,9 @@ import org.exodusstudio.arcana.common.block.BoilerBlock;
 import org.exodusstudio.arcana.common.block.NitorBlock;
 import org.exodusstudio.arcana.common.block.ResearchTable;
 import org.exodusstudio.arcana.common.block.WeepingPetal;
-import org.exodusstudio.arcana.common.block.water_lillie.default_lillie;
 import org.exodusstudio.arcana.common.block.water_lillie.lillie_block;
 import org.exodusstudio.arcana.common.block.water_lillie.lily_padBlock;
+import org.exodusstudio.arcana.common.block.water_lillie.sunken_lillie;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,13 +56,14 @@ public class BlockRegistry {
             props -> props.instabreak().noOcclusion(),
             props -> props.stacksTo(1));
 
-    public static final DeferredBlock<Block> DEFAULT_LILLIE = registerBasicBlock("default_lillie",
-            BlockBehaviour.Properties::instabreak,
+    public static final DeferredBlock<sunken_lillie> SUNKEN_LILLIE = registerSpecificBlock("sunken_lillie",
+            sunken_lillie::new,
+            p -> p.instabreak().pushReaction(PushReaction.DESTROY).noOcclusion(),
             props -> props);
 
     public static final DeferredBlock<lillie_block> LILLIE_BLOCK = registerSpecificBlock("lillie",
-            props -> new lillie_block(DEFAULT_LILLIE, props),
-            BlockBehaviour.Properties::instabreak,
+            props -> new lillie_block(SUNKEN_LILLIE, props),
+            P -> P.noOcclusion().pushReaction(PushReaction.DESTROY),
             props -> props);
     public static final DeferredBlock<lily_padBlock> LILY_PAD_BLOCK = registerSpecificBlock("lily_pad_block",
             lily_padBlock::new,
