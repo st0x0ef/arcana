@@ -22,6 +22,7 @@ import org.exodusstudio.arcana.common.block.ResearchTable;
 import org.exodusstudio.arcana.common.block.WeepingPetal;
 import org.exodusstudio.arcana.common.block.water_lillie.default_lillie;
 import org.exodusstudio.arcana.common.block.water_lillie.lillie_block;
+import org.exodusstudio.arcana.common.block.water_lillie.lily_padBlock;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,7 +68,11 @@ public class BlockRegistry {
             props -> new lillie_block(DEFAULT_LILLIE, props),
             BlockBehaviour.Properties::instabreak,
             props -> props);
-    ;
+    public static final DeferredBlock<lily_padBlock> LILY_PAD_BLOCK = registerSpecificBlock("lily_pad_block",
+            lily_padBlock::new,
+            p -> p.instabreak().noOcclusion(),
+            p -> p.stacksTo(1)
+            );
 
     //public static final DeferredBlock<NimbusStone> NIMBUS_STONE = registerSpecificBlock("nimbus_stone", NimbusStone.class,
     //        BlockBehaviour.Properties.of().strength(2.0f, 1.0f).requiresCorrectToolForDrops().noOcclusion(),

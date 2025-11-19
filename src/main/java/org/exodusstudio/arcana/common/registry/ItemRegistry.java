@@ -33,6 +33,10 @@ public class ItemRegistry {
             () -> BlockRegistry.NITOR_BLOCK.get(), //dont follow the yellow it lies
             P -> P.stacksTo(1));
 
+    public static final DeferredItem<BlockItem> LILLIE_BLOCK_ITEM = ITEMS.registerItem("lillie_item",
+            props -> new LillieBlockItem(BlockRegistry.LILLIE_BLOCK.get(), props),
+            P -> P);
+
 
     public static final DeferredItem<Item> NHIL_CRYSTAL = ITEMS.registerSimpleItem("nhil_crystal");
     public static final DeferredItem<Item> INK_BOTTLE = ITEMS.registerSimpleItem("ink_bottle");
