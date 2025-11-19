@@ -37,15 +37,14 @@ public class ArcanaCreativeModeTabs {
                       pOutput.accept(ItemRegistry.MATE);
                       pOutput.accept(BlockRegistry.WEEPING_PETAL);
                       pOutput.accept(ItemRegistry.WEEPING_POWDER);
-                      //pOutput.accept(BlockRegistry.LILLIE_BLOCK);
+                      pOutput.accept(BlockRegistry.LILLIE_BLOCK);
                       pOutput.accept(ItemRegistry.ALCHEMICAL_STEEL);
-                      /*
                         for (DyeColor color : DyeColor.values()) {
                             ItemStack stack = new ItemStack(ItemRegistry.NITOR.get());
                             stack.set(DataComponents.DYED_COLOR, new DyedItemColor(color.getTextureDiffuseColor()));
                             pOutput.accept(stack);
                         }
-                       */
+
                       //pOutput.accept(BlockRegistry.NIMBUS_STONE);
                     }).build());
 

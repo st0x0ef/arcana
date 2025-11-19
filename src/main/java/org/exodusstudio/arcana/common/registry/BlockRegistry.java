@@ -12,10 +12,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.exodusstudio.arcana.Arcana;
 
 //import org.exodusstudio.arcana.common.block.NimbusStone;
-import org.exodusstudio.arcana.common.block.BoilerBlock;
-import org.exodusstudio.arcana.common.block.NitorBlock;
-import org.exodusstudio.arcana.common.block.ResearchTable;
-import org.exodusstudio.arcana.common.block.WeepingPetal;
+import org.exodusstudio.arcana.common.block.*;
 import org.exodusstudio.arcana.common.block.water_lillie.lillie_block;
 import org.exodusstudio.arcana.common.block.water_lillie.lily_padBlock;
 import org.exodusstudio.arcana.common.block.water_lillie.sunken_lillie;
@@ -60,6 +57,10 @@ public class BlockRegistry {
             sunken_lillie::new,
             p -> p.instabreak().pushReaction(PushReaction.DESTROY).noOcclusion(),
             props -> props);
+    public static final DeferredBlock<FirePoppy> FIRE_POPPY = registerSpecificBlock("fire_poppy",
+            FirePoppy::new,
+            props -> props.instabreak().lightLevel(state -> state.getValue(FirePoppy.AWAKE) ? 0 : 8).noCollision(),
+            props -> props.stacksTo(1));
 
     public static final DeferredBlock<lillie_block> LILLIE_BLOCK = registerSpecificBlock("lillie",
             props -> new lillie_block(SUNKEN_LILLIE, props),
@@ -70,6 +71,7 @@ public class BlockRegistry {
             p -> p.instabreak().noOcclusion(),
             p -> p.stacksTo(1)
             );
+
 
     //public static final DeferredBlock<NimbusStone> NIMBUS_STONE = registerSpecificBlock("nimbus_stone", NimbusStone.class,
     //        BlockBehaviour.Properties.of().strength(2.0f, 1.0f).requiresCorrectToolForDrops().noOcclusion(),
