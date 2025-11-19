@@ -16,14 +16,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.exodusstudio.arcana.client.Keybindings;
 import org.exodusstudio.arcana.client.gui.ResearchTableScreen;
+import org.exodusstudio.arcana.common.block.entity.BoilerBlockEntity;
 import org.exodusstudio.arcana.common.capabilities.ModCapabilities;
 import org.exodusstudio.arcana.common.data.theorie.TheoryRegistry;
 import org.exodusstudio.arcana.common.inventory.BoilerInventory;
 import org.exodusstudio.arcana.common.item.ArcanaCreativeModeTabs;
-import org.exodusstudio.arcana.common.particle.BoilingParticle;
-import org.exodusstudio.arcana.common.particle.EvaporationParticle;
-import org.exodusstudio.arcana.common.particle.ParticleRegistry;
-import org.exodusstudio.arcana.common.particle.ResearchParticle;
+import org.exodusstudio.arcana.common.particle.*;
 import org.exodusstudio.arcana.common.registry.*;
 
 @Mod(Arcana.MODID)
@@ -65,6 +63,7 @@ public class Arcana {
             event.registerSpriteSet(ParticleRegistry.EVAPORATION_PARTICLE.get(), EvaporationParticle.Provider::new);
             event.registerSpriteSet(ParticleRegistry.BOILING_PARTICLE.get(), BoilingParticle.Provider::new);
             event.registerSpriteSet(ParticleRegistry.RESEARCH_PARTICLE.get(), ResearchParticle.Provider::new);
+            event.registerSpriteSet(ParticleRegistry.FIRE_PARTICLE.get(), FireParticle.Provider::new);
         }
 
 
@@ -93,6 +92,11 @@ public class Arcana {
                     Capabilities.Item.BLOCK,
                     BlockEntityRegistry.BOILER_BE.get(),
                     (be, side) -> be.getInventory()
+            );
+            event.registerBlockEntity(
+                    Capabilities.Fluid.BLOCK,
+                    BlockEntityRegistry.BOILER_BE.get(),
+                    (be, side) -> ((BoilerBlockEntity) be).getFluidStorage()
             );
         }
     }

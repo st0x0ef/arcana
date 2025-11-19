@@ -16,9 +16,6 @@ import org.exodusstudio.arcana.common.registry.MenuRegistry;
 public class ResearchTableMenu extends AbstractContainerMenu {
     public final ResearchTableEntity researchTableEntity;
     private final Level level;
-
-
-
     public ResearchTableMenu(int containerId, Inventory inv, FriendlyByteBuf extraData) {
         this(containerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()));
     }
@@ -28,6 +25,7 @@ public class ResearchTableMenu extends AbstractContainerMenu {
         super(MenuRegistry.RESEARCH_TABLE_MENU.get(), containerId);
         this.researchTableEntity = (ResearchTableEntity) blockEntity;
         this.level = inv.player.level();
+
 
         this.addSlot(new ResourceHandlerSlot(
                 this.researchTableEntity.inventory,

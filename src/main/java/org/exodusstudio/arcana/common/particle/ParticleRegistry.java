@@ -24,6 +24,9 @@ public class ParticleRegistry {
     public static final Supplier<SimpleParticleType> RESEARCH_PARTICLE =
             PARTICLE_TYPES.register("research_particle", () -> new SimpleParticleType(true));
 
+    public static final Supplier<SimpleParticleType> FIRE_PARTICLE =
+            PARTICLE_TYPES.register("fire_particle", () -> new SimpleParticleType(true));
+
     public static void register(IEventBus eventBus){
         PARTICLE_TYPES.register(eventBus);
     }

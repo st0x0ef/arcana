@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "awake=false": {"model": "arcana:block/fire_poppy"},
+    "awake=true": {"model": "arcana:block/closed_fire_poppy"}
+  }
+}

@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
@@ -21,15 +22,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.capabilities.BlockCapability;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import org.exodusstudio.arcana.common.block.entity.BoilerBlockEntity;
 import org.exodusstudio.arcana.common.capabilities.ModCapabilities;
+import org.exodusstudio.arcana.common.fluid_storage.BoilerFluidStorage;
 import org.exodusstudio.arcana.common.inventory.BoilerInventory;
 import org.exodusstudio.arcana.common.registry.BlockEntityRegistry;
 import org.jetbrains.annotations.Nullable;
@@ -90,8 +95,28 @@ public class BoilerBlock extends BaseEntityBlock {
         if (level.getBlockEntity(pos) instanceof BoilerBlockEntity boilerBlockEntity) {
             BoilerInventory inventory = boilerBlockEntity.getInventory();
             ItemResource resource = ItemResource.of(stack);
+            BoilerFluidStorage fluidStorage = boilerBlockEntity.getFluidStorage();
 
-            if (!stack.isEmpty() && !stack.is(Items.WATER_BUCKET)){
+            if (stack.getItem() instanceof BucketItem bucketItem){
+                var fluid = bucketItem.getContent();
+                if (fluid != Fluids.EMPTY){
+                    FluidResource res = FluidResource.of(bucketItem.getContent());
+                    int filled = fluidStorage.insert(res, 3000, null);
+
+                    if (!level.isClientSide()) {
+                        if (filled == 3000){
+                            if (!player.isCreative()) player.setItemInHand(hand, new ItemStack(Items.BUCKET));
+
+                            level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 2, 1);
+                            return InteractionResult.SUCCESS;
+                        }
+
+                    }
+                }
+
+            }
+
+            if (!stack.isEmpty()){
                 if (!level.isClientSide()){
                     for (int i = 0; i < inventory.getSlots(); i++) {
                         ItemStack current = inventory.getStackInSlot(i);
@@ -113,18 +138,9 @@ public class BoilerBlock extends BaseEntityBlock {
                 return InteractionResult.SUCCESS;
             }
 
-            if (stack.is(Items.WATER_BUCKET) && boilerBlockEntity.getWaterAmmount() < 3){
-                if (!level.isClientSide()) {
-                    boilerBlockEntity.addWater(3);
-                    if (!player.isCreative()) player.setItemInHand(hand, new ItemStack(Items.BUCKET));
-                    level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 2, 1);
-                    return InteractionResult.SUCCESS;
-                }
-            }
         }
-        return InteractionResult.PASS;
+        return InteractionResult.SUCCESS;
     }
-
 }
 
 

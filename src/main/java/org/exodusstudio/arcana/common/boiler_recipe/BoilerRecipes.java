@@ -19,12 +19,12 @@ public class BoilerRecipes {
         alchSteel.put(ItemRegistry.WEEPING_POWDER.asItem(), 1);
         alchSteel.put(ItemRegistry.NHIL_POWDER.asItem(), 1);
         RECIPES.add(new BoilerRecipe(alchSteel, new ItemStack(ItemRegistry.ALCHEMICAL_STEEL.asItem())));
-
+/*
         Map<Item, Integer> nitor = new HashMap<>();
         nitor.put(ItemRegistry.NHIL_POWDER.asItem(), 1);
         nitor.put(Items.COAL, 1);
         RECIPES.add(new BoilerRecipe(nitor, new ItemStack(ItemRegistry.NITOR.asItem())));
-
+*/
         Map<Item, Integer> cheese = new HashMap<>();
         cheese.put(Items.MILK_BUCKET, 1);
         cheese.put(ItemRegistry.NHIL_POWDER.asItem(), 1);
