@@ -11,7 +11,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class WeepingPetal extends Block {
     public WeepingPetal(Properties properties){super(properties);}
 
-    public static final VoxelShape SHAPE = Block.box(6.0, 0.0, 6.0, 10.0, 9.0, 10.0);
+    public static final VoxelShape SHAPE = Block.box(6.0, 0.0, 5.0, 10.0, 14.0, 10.0);
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

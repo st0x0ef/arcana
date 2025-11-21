@@ -13,7 +13,7 @@ import org.exodusstudio.arcana.common.registry.BlockEntityRegistry;
 
 public class FirePoppyEntity extends BlockEntity {
 
-    public static int delayValue = 0;
+    private int delayValue = 0;
 
     public FirePoppyEntity(BlockPos pos, BlockState blockState) {
         super(BlockEntityRegistry.FIRE_POPPY_BE.get(), pos, blockState);
@@ -37,12 +37,12 @@ public class FirePoppyEntity extends BlockEntity {
         }
 
         if (!isAwake){
-            delayValue++;
-            boolean flag = delayValue % 2 == 0;
+            be.delayValue++;
+            boolean flag = be.delayValue % 2 == 0;
             if (flag){
                 spawnParticles(blockPos, level);
             }
-            if (delayValue >= 1000){delayValue = 0;}
+            if (be.delayValue >= 1000){be.delayValue = 0;}
         }
     }
 }
