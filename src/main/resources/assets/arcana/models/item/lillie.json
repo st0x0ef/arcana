@@ -1,3 +1,4 @@
 {
-  "parent": "arcana:block/lillie"
+  "parent": "arcana:block/lillie",
+  "gui_light": "front"
 }
