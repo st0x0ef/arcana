@@ -1,3 +1,4 @@
 {
-  "parent": "arcana:block/sunken_lillie"
+  "parent": "arcana:block/sunken_lillie",
+  "gui_light": "front"
 }
