@@ -9,6 +9,7 @@ import org.exodusstudio.arcana.Arcana;
 import org.exodusstudio.arcana.common.block.entity.BoilerBlockEntity;
 import org.exodusstudio.arcana.common.block.entity.FirePoppyEntity;
 import org.exodusstudio.arcana.common.block.entity.ResearchTableEntity;
+import org.exodusstudio.arcana.common.block.entity.WeepingPetalEntity;
 
 import java.util.Set;
 import java.util.function.Supplier;
@@ -28,6 +29,10 @@ public class BlockEntityRegistry {
     public static final Supplier<BlockEntityType<FirePoppyEntity>> FIRE_POPPY_BE =
             BLOCK_ENTITIES.register("fire_poppy_be",
                     () -> new BlockEntityType<>(FirePoppyEntity::new, Set.of(BlockRegistry.FIRE_POPPY.get()))
+            );
+    public static final Supplier<BlockEntityType<WeepingPetalEntity>> WEEPING_PETAL_BE =
+            BLOCK_ENTITIES.register("weeping_petal_be",
+                    () -> new BlockEntityType<>(WeepingPetalEntity::new, Set.of(BlockRegistry.WEEPING_PETAL.get()))
             );
 
     public static void register(IEventBus eventBus)

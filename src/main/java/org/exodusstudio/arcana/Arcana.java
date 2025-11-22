@@ -2,7 +2,9 @@ package org.exodusstudio.arcana;
 
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -12,11 +14,13 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.exodusstudio.arcana.client.Keybindings;
 import org.exodusstudio.arcana.client.gui.ResearchTableScreen;
 import org.exodusstudio.arcana.common.block.entity.BoilerBlockEntity;
+import org.exodusstudio.arcana.common.block.entity.WeepingPetalEntity;
 import org.exodusstudio.arcana.common.capabilities.ModCapabilities;
 import org.exodusstudio.arcana.common.data.theorie.TheoryRegistry;
 import org.exodusstudio.arcana.common.inventory.BoilerInventory;
@@ -44,6 +48,7 @@ public class Arcana {
         MenuRegistry.register(modEventBus);
         TheoryRegistry.RegisterTheories();
         ParticleRegistry.register(modEventBus);
+        SoundsRegistry.register(modEventBus);
     }
 
     @EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
